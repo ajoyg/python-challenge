@@ -1,6 +1,5 @@
 import os
 import csv
-import locale
 
 
 csvpath = os.path.join('Resources','budget_data.csv')
@@ -43,11 +42,13 @@ with open(csvpath, encoding='utf8') as budgetdata:
                 greatest_decrease_mth = month
 
 # write the results into the analysis file   
-print (f"Total Months : {total_months}")
-print(f"Total Profit/Loss : {total_profit_loss}")
-print(f"Average change {round(total_change/(len(budgetrows)-1),2)}")
-locale.setlocale(locale.LC_ALL, 'en_US')
-#greatest_increase_format = "${:0, .0f}".format(greatest_increase)
-#greatest_decrease_format = "${:0, .0f}".format(greatest_decrease)
-print(f'Greatest Increase in Profits: {greatest_increase_mth} : ','{:0, .0f}'.format(greatest_increase))
-print(f'Greatest Decrease in Profits: {greatest_decrease_mth} : ','{:0, .0f}'.format(greatest_decrease))
+analysisoutput = os.path.join('analysis','FinancialAnalysis.txt')
+with open(analysisoutput,'w') as analysiswriter:
+    analysiswriter.write("```text\n")
+    analysiswriter.write("Financial Analysis\n")
+    analysiswriter.write("----------------------------\n")
+    analysiswriter.write(f"Total Months: {total_months}\n")
+    analysiswriter.write(f'Total Profit/Loss: {"${:.0f}".format(total_profit_loss)}\n')
+    analysiswriter.write(f'Average change: {"${: .2f}".format(total_change/(len(budgetrows)-1))}\n')
+    analysiswriter.write(f'Greatest Increase in Profits: {greatest_increase_mth}  ({"${:.0f}".format(greatest_increase)})\n')
+    analysiswriter.write(f'Greatest Decrease in Profits: {greatest_decrease_mth}  ({"${: .0f}".format(greatest_decrease)})\n')
