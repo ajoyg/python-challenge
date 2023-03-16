@@ -9,7 +9,7 @@ with open(csvpath, encoding='utf8') as budgetdata:
     csvreader = csv.reader(budgetdata, delimiter=',')
    
     #Get the data into a list
-    budgetrows=[r for r in csvreader]
+    budgetrows=[row for row in csvreader]
     budgetrows.pop(0) # Remove the header
     
     total_change=0
@@ -27,28 +27,29 @@ with open(csvpath, encoding='utf8') as budgetdata:
     total_profit_loss=0
     for monthly_budget in budgetrows:
         total_profit_loss = total_profit_loss+int(monthly_budget[1]) # Total profit/loss
-    
-    # Get the greatest increase and decrease
-    greatest_increase = 0
-    greatest_decrease = -1
-    for month, change in change_dict.items():
-        if change >0:
-            if change > greatest_increase:
-                greatest_increase = change
-                greatest_increase_mth = month
-        else:
-            if change < greatest_decrease:
-                greatest_decrease = change
-                greatest_decrease_mth = month
 
-# write the results into the analysis file   
+# write the results into the analysis file and print it on the terminal  
 analysisoutput = os.path.join('analysis','FinancialAnalysis.txt')
 with open(analysisoutput,'w') as analysiswriter:
     analysiswriter.write("```text\n")
+    print("```text")
     analysiswriter.write("Financial Analysis\n")
+    print("Financial Analysis")
     analysiswriter.write("----------------------------\n")
+    print("----------------------------")
     analysiswriter.write(f"Total Months: {total_months}\n")
-    analysiswriter.write(f'Total Profit/Loss: {"${:.0f}".format(total_profit_loss)}\n')
+    print(f"Total Months: {total_months}")
+    analysiswriter.write(f'Total: {"${:.0f}".format(total_profit_loss)}\n')
+    print(f'Total: {"${:.0f}".format(total_profit_loss)}')
+   
     analysiswriter.write(f'Average change: {"${: .2f}".format(total_change/(len(budgetrows)-1))}\n')
-    analysiswriter.write(f'Greatest Increase in Profits: {greatest_increase_mth}  ({"${:.0f}".format(greatest_increase)})\n')
-    analysiswriter.write(f'Greatest Decrease in Profits: {greatest_decrease_mth}  ({"${: .0f}".format(greatest_decrease)})\n')
+    print(f'Average change: {"${:.2f}".format(total_change/(len(budgetrows)-1))}')
+   
+    analysiswriter.write(f'Greatest Increase in Profits: {max(change_dict, key=lambda key:change_dict[key])}  ({"${:.0f}".format(change_dict[max(change_dict, key=lambda key:change_dict[key])])})\n')
+    print(f'Greatest Increase in Profits: {max(change_dict, key=lambda key:change_dict[key])}  ({"${:.0f}".format(change_dict[max(change_dict, key=lambda key:change_dict[key])])})')
+   
+    analysiswriter.write(f'Greatest Decrease in Profits: {min(change_dict, key=lambda key:change_dict[key])}  ({"${: .0f}".format(change_dict[min(change_dict, key=lambda key:change_dict[key])])})\n')
+    print(f'Greatest Decrease in Profits: {min(change_dict, key=lambda key:change_dict[key])}  ({"${: .0f}".format(change_dict[min(change_dict, key=lambda key:change_dict[key])])})')
+   
+    analysiswriter.write("```\n")
+    print("```")
