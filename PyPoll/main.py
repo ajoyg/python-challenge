@@ -10,8 +10,9 @@ candidate_total_votes={} # Define a dictionary to hold the total votes for each 
 #open the election_data.csv file
 with open(csvpath, encoding='utf8') as electiondata:
     electionreader = csv.reader(electiondata, delimiter=',')
-    next(electionreader) # skip the title
-    # get the distinct candidates and the candidates who got the vote per voter
+    csvheader=next(electionreader) # skip the title, store the header in a variable
+
+    # get the distinct candidates and the candidates who got the vote per voter id
     for voterrow in electionreader:
         candidates_votes.append((voterrow[2])) # candidate per voter
         candidates.add(voterrow[2]) #distinct candidate names
@@ -38,7 +39,7 @@ with open(analysisoutput,'w') as analysiswriter:
         print(f'{candidate}: {((total_votes*100)/len(candidates_votes)):.3f}% ({total_votes:.0f})')
     analysiswriter.write("-------------------------\n")
     print("-------------------------")
-    analysiswriter.write(f'Winner: {max(candidate_total_votes, key=lambda key:candidate_total_votes[key])}\n') #use the lambda or anonymous function to get the candidate who got the maxumum votes
+    analysiswriter.write(f'Winner: {max(candidate_total_votes, key=lambda key:candidate_total_votes[key])}\n') #use the lambda or anonymous function to get the candidate with the maxumum votes
     print(f'Winner: {max(candidate_total_votes, key=lambda key:candidate_total_votes[key])}')
     analysiswriter.write("-------------------------\n")
     print("-------------------------")

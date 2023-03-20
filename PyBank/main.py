@@ -10,7 +10,7 @@ with open(csvpath, encoding='utf8') as budgetdata:
    
     #Get the data into a list
     budgetrows=[row for row in csvreader]
-    budgetrows.pop(0) # Remove the header
+    csvheader = budgetrows.pop(0) # Remove the header from the list7777
     
     total_change=0
     change_dict={}
