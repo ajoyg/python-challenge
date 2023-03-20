@@ -13,7 +13,7 @@ with open(csvpath, encoding='utf8') as budgetdata:
     csvheader = budgetrows.pop(0) # Remove the header from the list
     
     total_change=0
-    change_dict={}
+    change_dict={} # dictionary to store the increase or decrease in profit / loss
     for i in range(len(budgetrows)):
         if i > 0:
             profit_loss_change=  int(budgetrows[i][1]) - int(budgetrows[i-1][1])
@@ -42,7 +42,7 @@ with open(analysisoutput,'w') as analysiswriter:
     print(f'Total: ${total_profit_loss:.0f}')
    
     analysiswriter.write(f'Average change: ${(total_change/(len(budgetrows)-1)):.2f}\n')
-    print(f'Average change: {"${:.2f}".format(total_change/(len(budgetrows)-1))}')
+    print(f'Average change: ${(total_change/(len(budgetrows)-1)):.2f}')
    
    #use the lambda or anonymous function to get the greatest profit increase and decrease from change_dict dictionary
     analysiswriter.write(f'Greatest Increase in Profits: {max(change_dict, key=lambda key:change_dict[key])}  (${(change_dict[max(change_dict, key=lambda key:change_dict[key])]):.0f})\n')
