@@ -44,6 +44,7 @@ with open(analysisoutput,'w') as analysiswriter:
     analysiswriter.write(f'Average change: ${(total_change/(len(budgetrows)-1)):.2f}\n')
     print(f'Average change: {"${:.2f}".format(total_change/(len(budgetrows)-1))}')
    
+   #use the lambda or anonymous function to get the greatest profit increase and decrease from change_dict dictionary
     analysiswriter.write(f'Greatest Increase in Profits: {max(change_dict, key=lambda key:change_dict[key])}  (${(change_dict[max(change_dict, key=lambda key:change_dict[key])]):.0f})\n')
     print(f'Greatest Increase in Profits: {max(change_dict, key=lambda key:change_dict[key])}  (${(change_dict[max(change_dict, key=lambda key:change_dict[key])]):.0f})')
    
